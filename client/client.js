@@ -29,5 +29,8 @@ form.addEventListener('submit', (event) => {
     }).then(response => response.json())
         .then(createdHiss => {
             console.log(createdHiss);
+            form.reset();
+            form.style.display = '';
+            loadingElement.style.display = 'none'
         });
 });
