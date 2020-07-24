@@ -2,6 +2,7 @@ console.log("Hello world")
 
 const form = document.querySelector('form');
 const loadingElement = document.querySelector('.loading');
+const API_URL = 'http://localhost:5000/hiss'
 
 loadingElement.style.display = "none";
 
@@ -16,8 +17,17 @@ form.addEventListener('submit', (event) => {
         content
     };
 
-    console.log(hiss);
-
     form.style.display = 'none';
     loadingElement.style.display = '';
+
+    fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify(hiss),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(response => response.json())
+        .then(createdHiss => {
+            console.log(createdHiss);
+        });
 });
