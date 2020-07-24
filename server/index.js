@@ -16,6 +16,14 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/hisses', (req, res) => {
+    hisses
+        .find()
+        .then(hisses => {
+            res.json(hisses)
+        });
+});
+
 function isValidHiss(hiss) {
     return hiss.name && hiss.name.toString().trim() !== '' &&
         hiss.name && hiss.name.toString().trim() !== '';
