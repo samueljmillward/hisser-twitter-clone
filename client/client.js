@@ -2,9 +2,12 @@ console.log("Hello world")
 
 const form = document.querySelector('form');
 const loadingElement = document.querySelector('.loading');
-const API_URL = 'http://localhost:5000/hiss'
+const hissesElement = document.querySelector('.hisses')
+const API_URL = 'http://localhost:5000/hisses'
 
-loadingElement.style.display = "none";
+loadingElement.style.display = '';
+
+listAllHisses();
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -34,3 +37,30 @@ form.addEventListener('submit', (event) => {
             loadingElement.style.display = 'none'
         });
 });
+
+function listAllHisses() {
+    fetch(API_URL)
+        .then(response => response.json())
+        .then(hisses => {
+            hisses.reverse();
+            hisses.forEach(hiss => {
+                const div = document.createElement('div');
+
+                const header = document.createElement('h3')
+                header.textContent = hiss.name;
+
+                const contents = document.createElement('p');
+                contents.textContent = hiss.content;
+
+                const date = document.createElement('small')
+                date.textContent = new Date(hiss.created);
+
+                div.appendChild(header);
+                div.appendChild(contents);
+                div.appendChild(date);
+
+                hissesElement.appendChild(div);
+            });
+            loadingElement.style.display = 'none'
+        });
+};
